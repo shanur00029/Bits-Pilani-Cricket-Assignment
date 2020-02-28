@@ -1,0 +1,81 @@
+class CricketBattingArrangement:
+    player = {}
+    combinations =[]
+    oldcomb = []
+    player_position = []
+    def readApplications(self, inputFile):
+        x = open(inputFile)
+        for i in x:
+            l = i.strip()
+            l = l .replace(' ','').split('/')
+            self.player[l[0]] = l[1:]
+        x.close()
+    def generate_player_position_list(self):
+        for i in range(11):              .............................................................O(n)
+            self.player_position.append([])
+
+        for i,j in self.player.items():     ..........................................................O(n)
+            if i == 'P10': 
+                i = 'PA' # new name of p10 for better understanding in membership fn
+            if i == 'P11': 
+                i = 'PB' # new name of p11 for better understanding in membership fn
+	# Generating player_position list of 1 to 11 position
+            for k in j:                     ..........................................................O(n)
+                if k == '1':
+                    self.player_position[int(k)-1].append(i)
+                elif k == '2':
+                    self.player_position[int(k)-1].append(i)
+                elif k == '3':
+                    self.player_position[int(k)-1].append(i)
+                elif k == '4':
+                    self.player_position[int(k)-1].append(i)
+                elif k == '5':
+                    self.player_position[int(k)-1].append(i)
+                elif k == '6':
+                    self.player_position[int(k)-1].append(i)
+                elif k == '7':
+                    self.player_position[int(k)-1].append(i)
+                elif k == '8':
+                    self.player_position[int(k)-1].append(i)
+                elif k == '9':
+                    self.player_position[int(k)-1].append(i)
+                elif k == '10':
+                    self.player_position[int(k)-1].append(i)
+                else:
+                    self.player_position[int(k)-1].append(i)
+    def generateCombinations(self):           
+        for pos1_players in self.player_position[0]: .................................................O(n)
+            self.oldcomb.append(pos1_players)
+        for list_of_pos in self.player_position[1:]: .................................................O(n)
+            newcomb = []
+            for prevcomb in self.oldcomb:            .................................................O(nxn)
+                for newplayer in list_of_pos:       ..................................................O(nxnxn)
+                    if newplayer not in prevcomb:
+                        newcombination = prevcomb + newplayer
+                        newcomb.append(newcombination)
+            self.oldcomb.clear()
+            self.oldcomb = newcomb.copy()
+        self.combinations = self.oldcomb.copy()
+
+
+    def writeResult(self, outputFile):
+
+        # Open file
+        fileHandler = open(outputFile, "w")
+
+        # Write the result
+        fileHandler.write("The total number of allocations possible is: %d \n" % len(self.combinations))
+
+        # Close file
+        fileHandler.close()
+
+        return None
+def main():
+    app = CricketBattingArrangement()
+    app.readApplications('/home/shanur/Desktop/cricket_assignment/inputPS7.txt')
+    app.generate_player_position_list()
+    app.generateCombinations()
+    app.writeResult("/home/shanur/Desktop/cricket_assignment/outputPS7.txt")
+if __name__ == "__main__":
+    main()
+
